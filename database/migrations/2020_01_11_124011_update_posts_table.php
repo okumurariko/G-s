@@ -13,14 +13,14 @@ class UpdatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::table('Posts', function (Blueprint $table) {
+        Schema::table('posts', function (Blueprint $table) {
             //
             $table->integer('user_id')->unsigned(); //カラム追加            
             $table->foreign('user_id') //外部キー制約
                   ->references('id')->on('users') //ｕｓｅｒｓテーブルのidを参照する
                   ->onDelete('cascade');  //ユーザーが削除されたら紐付くpostsも削除
         });
-        Schema::rename('Posts','texts');
+        Schema::rename('posts','texts');
     }
 
     /**
