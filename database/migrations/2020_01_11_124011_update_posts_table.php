@@ -19,8 +19,8 @@ class UpdatePostsTable extends Migration
             $table->foreign('user_id') //外部キー制約
                   ->references('id')->on('users') //ｕｓｅｒｓテーブルのidを参照する
                   ->onDelete('cascade');  //ユーザーが削除されたら紐付くpostsも削除
-           
         });
+        Schema::rename('Posts','texts');
     }
 
     /**
