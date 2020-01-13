@@ -20,7 +20,7 @@ class CommentsController extends Controller
         $text = Text::findOrFail($params['text_id']);
         $text->comments()->create($params);
 
-        return view('texts.show', ['user_id' => $user]);
+        // return view('texts.show', ['user_id' => $user]);
 
         return redirect()->route('texts.show', ['text' => $text]);
     }
