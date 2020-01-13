@@ -3,21 +3,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;  
-use App\Post;
+use App\Text;
 use App\User;
 
 class CommentsController extends Controller
 {
     public function store(Request $request)
     {
+        $user = Auth::user();   #ログインユーザー情報を取得します。
         $params = $request->validate([
-            'post_id' => 'required|exists:posts,id',
+            'text_id' => 'required|exists:texts,id',
             'body' => 'required|max:2000',
             'user_id' => 'nullable',
         ]);
-        $post = Post::findOrFail($params['post_id']);
-        $post->comments()->create($params);
+        
+        $text = Text::findOrFail($params['text_id']);
+        $text->comments()->create($params);
 
-        return redirect()->route('posts.show', ['post' => $post]);
+        return view('texts.show', ['user_id' => $user]);
+
+        return redirect()->route('texts.show', ['text' => $text]);
     }
+
 }

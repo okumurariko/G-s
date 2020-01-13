@@ -6,13 +6,13 @@
         <div class="border p-4">
 
             <div class="mb-4 text-right">
-                <a class="btn btn-primary" href="{{ route('posts.edit', ['post' => $post]) }}">
+                <a class="btn btn-primary" href="{{ route('texts.edit', ['text' => $text]) }}">
                     編集する
                 </a>
                 <form
                         style="display: inline-block;"
                         method="POST"
-                        action="{{ route('posts.destroy', ['post' => $post]) }}"
+                        action="{{ route('texts.destroy', ['text' => $text]) }}"
                     >
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
@@ -22,46 +22,55 @@
             
             <!-- 元の投稿を表示する -->
             <h1 class="h5 mb-4">
-                {{ $post->title }}
+                {{ $text->title }}
             </h1>
-            <p class="mb-5">{!! nl2br(e($post->body)) !!}</p>
+            <p class="mb-5">{!! nl2br(e($text->body)) !!}</p>
 
             <section>
             <h2 class="h5 mb-4">
                 コメント
             </h2>
 
-            <form class="mb-4" method="POST" action="{{ route('comments.store') }}">
+            <form class="mb-4" method="POST" action="{{ route('comments.store') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
-                {{ method_field('PUT') }} 
-
+                
                 <input
-                    name="post_id"
+                    name="text_id"
                     type="hidden"
-                    value="{{ $post->id }}"
+                    value="{{ $text->id }}"
                 >
 
-                    <div class="form-group">
-                        <label for="body">本文</label>
-                    <textarea
-                        id="body"
-                        name="body"
-                        class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}"
-                        rows="4"
-                    >{{ old('body') }}
-                    </textarea>
-                    @if ($errors->has('body'))
-                        <div class="invalid-feedback">
-                            {{ $errors->first('body') }}
-                        </div>
-                    @endif
-                </div>
-                <input 
+                <div class="form-group">
+                    <label for="user_id">
+                    ユーザー 
+                    </label>
+                    <input 
                         type="hidden"
                         id="user_id"
                         name="user_id"
                         value="{{ Auth::id() }}"
                         >
+                        <!-- value="{{ old('user_id') }}" -->
+                        @if ($errors->has('user_id'))
+                            <div class="invalid-feedback">
+                                {{ $errors->first('user_id') }}
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="form-group">
+                        <label for="body">本文</label>
+                    <textarea id="body"
+                        name="body"
+                        class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}"
+                        rows="4"
+                    >{{ old('body') }}</textarea>
+                    @if ($errors->has('body'))
+                        <div class="invalid-feedback">
+                            {{ $errors->first('body') }}
+                        </div>
+                    @endif
+                    </div>
 
                 <div class="mt-4">
                     <button type="submit" class="btn btn-primary">
@@ -70,7 +79,7 @@
                 </div>
             </form>
 
-                @forelse($post->comments as $comment)
+                @forelse($text->comments as $comment)
                     <div class="border-top p-4">
                         <time class="text-secondary">
                             {{ $comment->created_at->format('Y.m.d H:i') }}

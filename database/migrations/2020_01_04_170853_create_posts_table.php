@@ -13,13 +13,14 @@ class CreatePostsTable extends Migration
      */
     public function up()
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title', 50);
-            $table->text('body');
-            // $table->text('username');
-            $table->timestamps();
-        });
+        // Schema::create('posts', function (Blueprint $table) {
+        //     $table->increments('id');
+        //     $table->string('title', 50);
+        //     $table->text('body');
+        //     // $table->text('username');
+        //     $table->timestamps();
+        //     Schema::rename('Posts','posts');
+        // });
     }
 
     /**
@@ -29,6 +30,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+        // Schema::dropIfExists('posts');
     }
 }
