@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>space</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -68,12 +68,15 @@
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                @auth
+                    <!-- <a href="{{ url('') }}">Home</a> -->
+                    <span class="my-navbar-item">
+                        こんにちは！  {{ Auth::user()->name }}さん
+                    </span>
                     @else
                         <a href="{{ route('login') }}">ログイン</a>
                         <a href="{{ route('register') }}">登録</a>
-                    @endauth
+                @endauth
                 </div>
             @endif
 

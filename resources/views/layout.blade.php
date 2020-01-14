@@ -25,12 +25,23 @@
         </div>
     </div>
     <div class="my-navbar-control">
-      @if(Auth::check())
-      <font color="white">
-        <span class="my-navbar-item">Loginユーザー：{{ Auth::user()->name }}</span></font>
+        @if(Auth::check())
+            <font color="white">
+                <span class="my-navbar-item">
+                    Loginユーザー：{{ Auth::user()->name }}
+                </span>
+                |
+
+                <span class="menu">
+                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>
+                </span>
+            </font>
         
-        {{ csrf_field() }}
-        </form>
       @else
         <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
         ｜
