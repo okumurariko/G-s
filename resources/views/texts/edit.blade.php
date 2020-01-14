@@ -32,6 +32,10 @@
                     </div>
 
                     <div class="form-group">
+                    <div class="user">
+                        ユーザー ： {{$text->user['name']}}
+                        </div>
+                        </br>
                         <label for="title">
                             タイトル
                         </label>

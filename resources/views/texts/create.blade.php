@@ -14,7 +14,7 @@
 
                     <div class="form-group">
                     <label for="user_id">
-                    ユーザー 
+                    ユーザー {{ Auth::user()->name }}
                     </label>
                     <input 
                         type="hidden"

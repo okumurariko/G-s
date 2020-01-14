@@ -16,12 +16,17 @@ class TextsController extends Controller
         return view('texts.index', ['texts' => $texts]);
         $user = Auth::user(); //ユーザー表示
         return view('texts.index', ['username' => $user]);//ユーザ表示
+        $texts=Text::with('user')->get();
+        Auth::logout();
+        return redirect()->route('/home');
+
     }
 
     public function create(){
         $user = Auth::user();   #ログインユーザー情報を取得します。
         return view('texts.create', ['user_id' => $user]);
         //return view('texts.create');
+        $texts=Text::with('user')->get();
     }
 
     public function store(Request $request){
@@ -39,11 +44,14 @@ class TextsController extends Controller
     public function show($text_id){
         $text = Text::findOrFail($text_id);
         return view('texts.show', ['text' => $text]);
+        $texts=Text::with('user')->get();
     }
 
     public function edit($text_id){
         $text = Text::findOrFail($text_id);
+        $this->authorize('edit', $text);
         return view('texts.edit', ['text' => $text,]);
+ 
     }
 
     public function update($text_id, Request $request){
@@ -54,6 +62,7 @@ class TextsController extends Controller
             //'user_id' => 'auth()->id()'
         ]);
         $text = Text::findOrFail($text_id);
+        $this->authorize('update', $text);
         $text->fill($params)->save();
         return redirect()->route('texts.show', ['text' => $text]);
     }

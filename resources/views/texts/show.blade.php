@@ -5,6 +5,7 @@
     <div class="container mt-4">
         <div class="border p-4">
 
+        @can('update', $text)
             <div class="mb-4 text-right">
                 <a class="btn btn-primary" href="{{ route('texts.edit', ['text' => $text]) }}">
                     編集する
@@ -19,17 +20,24 @@
                     <button class="btn btn-danger">削除する</button>
                 </form>
             </div>
+        @endcan
+        
             
             <!-- 元の投稿を表示する -->
+
+            <div class="user">
+                投稿者 ： {{$text->user['name']}}
+                </div>
+                
             <h1 class="h5 mb-4">
                 {{ $text->title }}
             </h1>
             <p class="mb-5">{!! nl2br(e($text->body)) !!}</p>
 
             <section>
-            <h2 class="h5 mb-4">
+            <!-- <h2 class="h5 mb-4">
                 コメント
-            </h2>
+            </h2> -->
 
             <form class="mb-4" method="POST" action="{{ route('comments.store') }}" enctype="multipart/form-data">
                 {{ csrf_field() }}
@@ -41,9 +49,8 @@
                 >
 
                 <div class="form-group">
-                    <label for="user_id">
-                    ユーザー 
-                    </label>
+
+                    
                     <input 
                         type="hidden"
                         id="user_id"
@@ -59,7 +66,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="body">本文</label>
+                        <label for="body">コメント文</label>
                     <textarea id="body"
                         name="body"
                         class="form-control {{ $errors->has('body') ? 'is-invalid' : '' }}"
@@ -70,6 +77,10 @@
                             {{ $errors->first('body') }}
                         </div>
                     @endif
+                    </div>
+
+                    <div for="user_id">
+                    ユーザー {{ Auth::user()->name }}
                     </div>
 
                 <div class="mt-4">
@@ -87,6 +98,10 @@
                         <p class="mt-2">
                             {!! nl2br(e($comment->body)) !!}
                         </p>
+
+                        <div class="user">
+                        ユーザー ： {{$comment->user['name']}}
+                        </div>
                     </div>
                 @empty
                     <p>コメントはまだありません。</p>

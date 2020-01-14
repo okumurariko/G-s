@@ -14,6 +14,7 @@
                     {{ $text->title }}
                 </div>                          
                 <div class="card-body">
+                
                     <p class="card-text">
                         {!! nl2br(e(str_limit($text->body, 200))) !!}
                     </p>
@@ -24,12 +25,11 @@
                 <div class="card-footer">
 
                 <div class="user">
-                ユーザー {{$text->username}}
-                
-                    </div>
+                ユーザー ： {{$text->user['name']}}
+                </div>
 
                     <span class="mr-2">
-                        投稿日時 {{ $text->created_at->format('Y.m.d') }}
+                        投稿日時：  {{ $text->created_at->format('Y.m.d') }}
                     </span>
 
                     @if ($text->comments->count())

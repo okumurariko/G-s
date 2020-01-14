@@ -24,6 +24,18 @@
                 </a>
         </div>
     </div>
+    <div class="my-navbar-control">
+      @if(Auth::check())
+      <font color="white">
+        <span class="my-navbar-item">Loginユーザー：{{ Auth::user()->name }}</span></font>
+        
+        {{ csrf_field() }}
+        </form>
+      @else
+        <a class="my-navbar-item" href="{{ route('login') }}">ログイン</a>
+        ｜
+        <a class="my-navbar-item" href="{{ route('register') }}">会員登録</a>
+      @endif
         
     </header>
 

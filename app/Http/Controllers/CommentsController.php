@@ -23,6 +23,8 @@ class CommentsController extends Controller
         // return view('texts.show', ['user_id' => $user]);
 
         return redirect()->route('texts.show', ['text' => $text]);
+
+        $comments=Comment::with('user')->get();
     }
 
 }
